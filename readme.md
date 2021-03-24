@@ -13,3 +13,8 @@ Consider that your script is in: ```[solution folder]\BuidTasks```
         <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File ..\BuildTasks\Create-DesignerFiles.ps1  -path $(ProjectDir) -namespace Project.Namespace -backup" />
     </Target>
 ```
+
+## Run as a common PowerShell script
+```shell
+.\Create-DesignerFiles.ps1  -path c:\path\to\project\containing\resxfiles -namespace Project.Namespace 
+```
