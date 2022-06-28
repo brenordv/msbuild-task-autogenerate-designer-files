@@ -116,6 +116,11 @@ $designerDataTemplate = @"
         }
 "@
 
+$namespace = $namespace.Trim()
+$path = $path.Trim()
+Write-Host "Current Namespace:" $namespace
+Write-Host "Search Path:" $path
+
 # Recursively looking for every .resx file, starting from informed path.
 Get-ChildItem -Path $path -Filter *.resx -Recurse -File | ForEach-Object {
     Write-Host 'Working on RESX file:' $_.Name -ForegroundColor Green -NoNewline
