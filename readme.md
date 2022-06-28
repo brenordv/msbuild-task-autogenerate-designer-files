@@ -16,6 +16,7 @@ Consider that your script is in: ```[solution folder]\BuidTasks```
         <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File ..\BuildTasks\Create-DesignerFiles.ps1  -path $(ProjectDir) -namespace Project.Namespace -backup" />
     </Target>
 ```
+Note: If you do this, you will change source (only .Designer.cs) files during release pipeline and this might affect your release process.
 
 Running only on Debug:
 ```xml
@@ -23,6 +24,14 @@ Running only on Debug:
         <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File ..\BuildTasks\Create-DesignerFiles.ps1  -path $(ProjectDir) -namespace Project.Namespace -backup" />
     </Target>
 ```
+
+If your path contains spaces, you should add double quotes to the paths:
+```xml
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'=='Debug'">
+        <Exec Command="powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File &quot;..\BuildTasks\Create-DesignerFiles.ps1&quot;  -path &quot; $(ProjectDir) &quot; -namespace Project.Namespace -backup" />
+    </Target>
+```
+Note: You cannot add &quot; to the end of $(ProjectDir) variable without a space, because it ends with a \ and if you add the ", it will be escaped and the script will fail.
 
 ## Run as a common PowerShell script
 ```shell
